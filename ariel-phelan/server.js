@@ -20,15 +20,26 @@ app.use(express.static('./public'));
 // DONE: Refactor to use arrow function
 
 app.post('/articles', bodyParser, (request, response) => {
-  // REVIEW: This route will receive a new article from the form page, new.html, and log that form data to the console. We will wire this up soon to actually write a record to our persistence layer!
+  // REVIEWED: This route will receive a new article from the form page, new.html, and log that form data to the console. We will wire this up soon to actually write a record to our persistence layer!
   console.log(request.body);
   response.send('Record posted to server!!');
 })
 
-// TODO: Write a new route, using an arrow function, that will handle a request and send the new.html file back to the user
+// DONE: Write a new route, using an arrow function, that will handle a request and send the new.html file back to the user
 app.get('/new', (req, res) => {
   res.sendFile('new.html', {root: './public'});
 })
+
+// STRETCHGOAL: Create a route and callback that will serve up the new.html page via a separate URI.
+app.get('/article', (req, res) => {
+  res.sendFile('new.html', {root: './public'});
+})
+
+app.get('/*', (req, res) => {
+  res.send('<h2>You have reached a non-existent page. Please click the link below to return to the homepage.<h2><hr><a href="index.html">Click Here</a>');
+})
+
+//STRETCHGOAL: Create a 404 route to handle any requests other than index.html or new.html, and deliver a 404 status message to those invalid requests
 
 app.listen(PORT, () => {
   // TODO: Refactor this to arrow function, log to the console a message that lets you know which port your server has started on
